@@ -1,38 +1,58 @@
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
-public class MyMap<K, V> implements Map<K, V> {
+public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
+	private int size;
 	
-	static class Node<K, V> implements Map.Entry<K, V>{
-		K key;
+	/*
+	 * In HashMap we use HashTables, but not in this implementation, 
+	 * so it's called 'nodes', instead of 'tables'
+	 */
+	
+	private ArrayList<MyMap.Node<K, V>> nodes;
+	
+	public MyMap (K keyType, V valueType) {
+		size = 0;
+	}
+	
+	static class Node<K, V> implements Map.Entry<K, V> {
+		final K key;
 		V value;
-
-		public K getKey() {
-			return this.key;
-		}
-
-		public V getValue() {
-			return this.value;
-		}
-
-		public V setValue(V value) {
+		Node <K, V> next;
+		
+		Node (K key, V value) {
+			this.key = key;
 			this.value = value;
-			return null;
 		}
 		
+		public final K getKey() {
+			return key;
+		}
+
+		public final V getValue() {
+			return value;
+		}
+
+		public final V setValue(V value) {
+			V oldValue = this.value;
+			this.value = value;
+			return oldValue;
+		}
+		
+		public final String toString() {
+			return key + ": " + value;
+		}
 	}
 
 	public int size() {
-		HashMap i = new HashMap();
-		return 0;
+		return size;
 	}
 
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size() == 0;
 	}
 
 	public boolean containsKey(Object key) {
@@ -51,8 +71,22 @@ public class MyMap<K, V> implements Map<K, V> {
 	}
 
 	public V put(K key, V value) {
-		// TODO Auto-generated method stub
-		return null;
+		if (nodes ==  null) {
+			nodes = new ArrayList<Node <K, V>>();
+		} else if (size == 0) {
+					nodes.add(new Node<K, V>(key, value));
+					size = nodes.size();
+					return value;
+		} else {
+			for (int i = 0; i < nodes.size(); i ++) {
+				if (nodes.get(i) == null) {
+					Node<K,V> nodeToAdd = new Node<K, V>(key, value);
+					Node<K, V> prevNode = nodes.get(i-1);
+					prevNode.next = nodeToAdd;
+				}
+			}
+		}	
+			
 	}
 
 	public V remove(Object key) {
