@@ -18,6 +18,10 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 		size = 0;
 	}
 	
+	public MyMap() {
+		
+	}
+	
 	static class Node<K, V> implements Map.Entry<K, V> {
 		final K key;
 		V value;
@@ -40,6 +44,10 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 			V oldValue = this.value;
 			this.value = value;
 			return oldValue;
+		}
+		
+		public final void setNext(Node<K, V> nextNode) {
+			this.next = nextNode;
 		}
 		
 		public final String toString() {
@@ -73,20 +81,20 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	public V put(K key, V value) {
 		if (nodes ==  null) {
 			nodes = new ArrayList<Node <K, V>>();
-		} else if (size == 0) {
-					nodes.add(new Node<K, V>(key, value));
-					size = nodes.size();
-					return value;
+		} 
+		if (size == 0) {
+				nodes.add(new Node<K, V>(key, value));
+				size = nodes.size();
+				return value;
 		} else {
-			for (int i = 0; i < nodes.size(); i ++) {
-				if (nodes.get(i) == null) {
-					Node<K,V> nodeToAdd = new Node<K, V>(key, value);
-					Node<K, V> prevNode = nodes.get(i-1);
-					prevNode.next = nodeToAdd;
-				}
-			}
+				Node<K,V> nodeToAdd = new Node<K, V>(key, value);
+				Node<K, V> prevNode = nodes.get(size - 1);
+				nodes.add(nodeToAdd);
+				prevNode.setNext(nodeToAdd);
+				
+				size ++;
+				return value;
 		}	
-			
 	}
 
 	public V remove(Object key) {
@@ -117,5 +125,13 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	public Set<Entry<K, V>> entrySet() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder("");
+		for (Node<K, V> node : nodes) {
+			stringBuilder.append(node.toString() + "\n");
+		}
+		return stringBuilder.toString();
 	}
 }
