@@ -88,8 +88,7 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	}
 	
 	
-	//FIXME add check for repeating key
-	//FIXME one null key is allowed
+	//one null key is allowed
 	public V put(K key, V value) {
 		if (nodes ==  null) {
 			nodes = new ArrayList<Node <K, V>>();
@@ -126,26 +125,25 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	}
 
 	public void putAll(Map<? extends K, ? extends V> m) {
-		// TODO Auto-generated method stub
+		//can be left as it is
 	}
 
 	public void clear() {
 		nodes.clear();
-		
 	}
 
 	public Set<K> keySet() {
-		// TODO Auto-generated method stub
+		//can be left as it is
 		return null;
 	}
 
 	public Collection<V> values() {
-		// TODO Auto-generated method stub
+		//can be left as it is
 		return null;
 	}
 
 	public Set<Entry<K, V>> entrySet() {
-		// TODO Auto-generated method stub
+		//can be left as it is
 		return null;
 	}
 	
