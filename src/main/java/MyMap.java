@@ -14,13 +14,10 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	
 	private ArrayList<MyMap.Node<K, V>> nodes;
 	
-	public MyMap (K keyType, V valueType) {
+	public MyMap() {
 		size = 0;
 	}
 	
-	public MyMap() {
-		
-	}
 	
 	static class Node<K, V> implements Map.Entry<K, V> {
 		final K key;
@@ -64,20 +61,35 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	}
 
 	public boolean containsKey(Object key) {
-		// TODO Auto-generated method stub
+		for (Node<K, V> node : nodes) {
+			if (node.key == key) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public boolean containsValue(Object value) {
-		// TODO Auto-generated method stub
+		for (Node<K, V> node : nodes) {
+			if (node.value == value) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public V get(Object key) {
-		// TODO Auto-generated method stub
+		for (Node<K, V> node : nodes) {
+			if (node.key == key) {
+				return node.value;
+			}
+		}
 		return null;
 	}
-
+	
+	
+	//FIXME add check for repeating key
+	//FIXME one null key is allowed
 	public V put(K key, V value) {
 		if (nodes ==  null) {
 			nodes = new ArrayList<Node <K, V>>();
@@ -87,6 +99,11 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 				size = nodes.size();
 				return value;
 		} else {
+			for (Node<K, V> node : nodes) {
+				if (node.getKey() == key) {
+					return null;
+				}
+			}
 				Node<K,V> nodeToAdd = new Node<K, V>(key, value);
 				Node<K, V> prevNode = nodes.get(size - 1);
 				nodes.add(nodeToAdd);
@@ -98,17 +115,22 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	}
 
 	public V remove(Object key) {
-		// TODO Auto-generated method stub
+		for (Node<K, V> node : nodes) {
+			if (node.key == key) {
+				V val = node.value;
+				nodes.remove(node);
+				return val;
+			}
+		}
 		return null;
 	}
 
 	public void putAll(Map<? extends K, ? extends V> m) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void clear() {
-		// TODO Auto-generated method stub
+		nodes.clear();
 		
 	}
 
