@@ -62,7 +62,7 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	public boolean containsKey(Object key) {
 		for (Node<K, V> node : nodes) {
-			if (node.key == key) {
+			if (node.key.equals(key)) {
 				return true;
 			}
 		}
@@ -71,7 +71,7 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	public boolean containsValue(Object value) {
 		for (Node<K, V> node : nodes) {
-			if (node.value == value) {
+			if (node.value.equals(value)) {
 				return true;
 			}
 		}
@@ -80,7 +80,7 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	public V get(Object key) {
 		for (Node<K, V> node : nodes) {
-			if (node.key == key) {
+			if (node.key.equals(key)) {
 				return node.value;
 			}
 		}
@@ -99,7 +99,7 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 				return value;
 		} else {
 			for (Node<K, V> node : nodes) {
-				if (node.getKey() == key) {
+				if (node.getKey().equals(value)) {
 					return null;
 				}
 			}
@@ -115,7 +115,7 @@ public class MyMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	public V remove(Object key) {
 		for (Node<K, V> node : nodes) {
-			if (node.key == key) {
+			if (node.key.equals(key)) {
 				V val = node.value;
 				nodes.remove(node);
 				return val;
